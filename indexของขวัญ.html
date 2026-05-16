@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hex Typing...</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff41; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        #hex-wrapper {
+            width: 80%;
+            font-size: 24px;
+            line-height: 1.4;
+            word-break: break-all; /* ทำให้ตัวอักษรตัดขึ้นบรรทัดใหม่เมื่อเต็มหน้าจอ */
+            text-align: left;
+        }
+        #cursor {
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: #00ff41;
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink 0.5s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hex-wrapper">
+        <span id="text-content"></span><span id="cursor"></span>
+    </div>
+
+    <script>
+        // ชุดรหัสแบบตัวติดกัน
+        const rawHex = "e0b889e0b8b1e0b899e0b8abe0b8a7e0b8b1e0b887e0b8a7e0b988e0b8b220e0b884e0b8b8e0b893e0b888e0b8b0e0b88ae0b8ade0b89ae0b882e0b8ade0b887e0b882e0b8a7e0b8b1e0b88de0b882e0b8ade0b887e0b889e0b8b1e0b899e0b899e0b8b0e0b884e0b8b0";
+        
+        const content = document.getElementById('text-content');
+        let index = 0;
+
+        function type() {
+            if (index < rawHex.length) {
+                // พิมพ์ทีละ 1 ตัวอักษร
+                content.innerHTML += rawHex.charAt(index);
+                index++;
+
+                // สุ่มความเร็ว: ระหว่าง 20ms (เร็วมาก) ถึง 300ms (ช้า)
+                let delay = Math.random() * (300 - 20) + 20;
+
+                // สุ่มจังหวะ "กระตุก" หรือหยุดคิด (หยุด 0.8 วินาที)
+                if (Math.random() > 0.95) {
+                    delay = 800;
+                }
+
+                setTimeout(type, delay);
+            }
+        }
+
+        // เริ่มต้นการพิมพ์
+        type();
+    </script>
+
+</body>
+</html>
